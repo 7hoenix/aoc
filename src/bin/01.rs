@@ -1,4 +1,8 @@
 pub fn part_one(input: &str) -> Option<u32> {
+    sorted_list(&input).pop()
+}
+
+fn sorted_list(input: &str) -> Vec<u32> {
     let raw_inputs: Vec<&str> = input
         .split("\n\n")
         // .map(|elf| {
@@ -20,22 +24,15 @@ pub fn part_one(input: &str) -> Option<u32> {
         })
         .collect();
 
-    let results: Option<u32> = elf_inputs.iter().map(|elf| elf.iter().sum()).max();
+    // let printable: Vec<u32> = elf_inputs.iter().map(|elf| elf.iter().sum()).collect();
 
-    // let elf_list: Vec<Vec<u32>> =
-    //     raw_inputs.iter()
-    //     .ma
+    let mut results: Vec<u32> = elf_inputs.iter().map(|elf| elf.iter().sum()).collect();
 
-    // let inputs: Vec<u32> = raw_inputs
-    //     .iter()
-    //     .map(|x| x.parse().expect("Not an integer"))
-    //     .collect();
-    // let processed: u32 = inputs.iter().sum();
-    // println!("{:?}", processed);
-    // // input.split('\n').map(str.);
-    // let my_int: Result<u32, core::num::ParseIntError> = input.parse();
-    // my_int.ok()
+    results.sort();
     results
+    // let mut slice: Vec<u32> = results.as_mut();
+
+    // slice.sort()
 }
 
 // fn get_elf(stream: Vec<&str>) -> (Vec<&str>, Vec<&str>) {
@@ -43,8 +40,8 @@ pub fn part_one(input: &str) -> Option<u32> {
 //     ([], [])
 // }
 
-pub fn part_two(_input: &str) -> Option<u32> {
-    None
+pub fn part_two(input: &str) -> Option<u32> {
+    Some(sorted_list(&input).iter().rev().take(3).sum())
 }
 
 fn main() {
@@ -63,12 +60,15 @@ mod tests {
         assert_eq!(part_one(&input), Some(24000));
 
         let input = advent_of_code::read_file("inputs", 1);
-        assert_eq!(part_one(&input), Some(0));
+        assert_eq!(part_one(&input), Some(69836));
     }
 
     #[test]
     fn test_part_two() {
         let input = advent_of_code::read_file("examples", 1);
-        assert_eq!(part_two(&input), None);
+        assert_eq!(part_two(&input), Some(45000));
+
+        let input = advent_of_code::read_file("inputs", 1);
+        assert_eq!(part_two(&input), Some(207968));
     }
 }
